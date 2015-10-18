@@ -1,5 +1,3 @@
-context = new AudioContext(); // Create and Initialize the Audio Context
-
 $(document).ready(function() {
     $(document).keypress(function () {
         if( event.which === 116 ) {
@@ -193,40 +191,3 @@ function audioRouting(data) {
         //playSound(source); // Pass the object to the play function
     });
 }
-
-//function playSound() {
-//  source.start(audioContext.currentTime); // play the source immediately
-//}
-
-// --------------
-
-
-// Create Annonomuos Self Executing Function
-//(function(){
-
-//var audioContext = new AudioContext(); // Create and Initialize the Audio Context
-//var electro; // Create the Sound
-//var getSound = new XMLHttpRequest(); // Load the Sound with XMLHttpRequest
-//getSound.open("GET", "sounds/electro2.wav", true); // Path to Audio File
-//getSound.responseType = "arraybuffer"; // Read as Binary Data
-//getSound.onload = function() {
-//	audioContext.decodeAudioData(getSound.response, function(buffer){
-//		electro = buffer; // Decode the Audio Data and Store it in a Variable
-//	});
-//}
-//getSound.send(); // Send the Request and Load the File
-
-//window.addEventListener("keydown",onKeyDown); // Create Event Listener for KeyDown
-
-//function onKeyDown(e){
-//	switch (e.keyCode) {
-// X
-//		case 88:
-//			var playSound = audioContext.createBufferSource(); // Declare a New Sound
-//			playSound.buffer = electro; // Attatch our Audio Data as it's Buffer
-//			playSound.connect(audioContext.destination);  // Link the Sound to the Output
-//			playSound.start(0); // Play the Sound Immediately
-//		break;
-//	}
-//}
-//}());
