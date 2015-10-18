@@ -185,17 +185,17 @@ function requestAndPlay(url) {
 
 // Create Buffered Sound Source
 function audioRouting(data) {
-    source = context.createBufferSource(); // Create sound source
-    context.decodeAudioData(data, function(buffer){ // Create source buffer from raw binary
+    source = audioContext.createBufferSource(); // Create sound source
+    audioContext.decodeAudioData(data, function(buffer){ // Create source buffer from raw binary
         source.buffer = buffer; // Add buffered data to object
-        source.connect(context.destination); // Connect sound source to output
-        source.start(context.currentTime); // play the source immediately
+        source.connect(audioContext.destination); // Connect sound source to output
+        source.start(audioContext.currentTime); // play the source immediately
         //playSound(source); // Pass the object to the play function
     });
 }
 
 //function playSound() {
-//  source.start(context.currentTime); // play the source immediately
+//  source.start(audioContext.currentTime); // play the source immediately
 //}
 
 // --------------
@@ -204,13 +204,13 @@ function audioRouting(data) {
 // Create Annonomuos Self Executing Function
 //(function(){
 
-//var context = new AudioContext(); // Create and Initialize the Audio Context
+//var audioContext = new AudioContext(); // Create and Initialize the Audio Context
 //var electro; // Create the Sound
 //var getSound = new XMLHttpRequest(); // Load the Sound with XMLHttpRequest
 //getSound.open("GET", "sounds/electro2.wav", true); // Path to Audio File
 //getSound.responseType = "arraybuffer"; // Read as Binary Data
 //getSound.onload = function() {
-//	context.decodeAudioData(getSound.response, function(buffer){
+//	audioContext.decodeAudioData(getSound.response, function(buffer){
 //		electro = buffer; // Decode the Audio Data and Store it in a Variable
 //	});
 //}
@@ -222,9 +222,9 @@ function audioRouting(data) {
 //	switch (e.keyCode) {
 // X
 //		case 88:
-//			var playSound = context.createBufferSource(); // Declare a New Sound
+//			var playSound = audioContext.createBufferSource(); // Declare a New Sound
 //			playSound.buffer = electro; // Attatch our Audio Data as it's Buffer
-//			playSound.connect(context.destination);  // Link the Sound to the Output
+//			playSound.connect(audioContext.destination);  // Link the Sound to the Output
 //			playSound.start(0); // Play the Sound Immediately
 //		break;
 //	}

@@ -1,0 +1,1 @@
+audioContext = new AudioContext(); // Create and Initialize the Audio Context
