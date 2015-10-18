@@ -9,7 +9,7 @@
   },
   "background": {
     "scripts": ["sound.js"],
-    "persistent": false
+    "persistent": true
   },
   "content_scripts": [
     {
