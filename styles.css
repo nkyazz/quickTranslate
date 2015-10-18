@@ -1,0 +1,26 @@
+#translation {
+	position: absolute;
+	opacity: 1;
+	background-color: #000;
+	color: #fff;
+}
+
+#spelling {
+	position: absolute;
+	color: #fff;
+	border:none;
+	visibility: hidden;
+	z-index:100;
+	cursor:pointer;
+}
+
+#spelling img {
+  width: 20px;
+  height: 20px;
+}
+
+.tt {
+	display: block;
+	padding: 1px 2px;
+	border-bottom: 1px solid #ccc;
+}                                        
