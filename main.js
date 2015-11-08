@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $(document).keypress(function () {
-        if (event.altKey && event.which === 116) {
+        if (event.altKey && event.which === 8224) {
             requestTranslationFor(getSelectedText(), function (translation) {
                 displayTranslation(translation);
             });
