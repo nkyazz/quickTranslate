@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="615ebb73-cdef-487d-bac6-f36903385638" name="Default" comment="" />
-    <list id="af732638-e07c-4c35-9c85-aa5e74a3eff1" name="ignore" comment="ignore">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="615ebb73-cdef-487d-bac6-f36903385638" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="inPlaceTranslator.iws" />
@@ -11,7 +9,6 @@
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -410,7 +407,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="615ebb73-cdef-487d-bac6-f36903385638" name="Default" comment="" />
-      <changelist id="af732638-e07c-4c35-9c85-aa5e74a3eff1" name="ignore" comment="" />
+      <changelist id="" name="ignore" comment="" />
       <created>1443988401637</created>
       <option name="number" value="Default" />
       <updated>1443988401637</updated>
@@ -420,7 +417,7 @@
       <workItem from="1444478308879" duration="182000" />
       <workItem from="1445206278560" duration="2717000" />
       <workItem from="1446327524133" duration="497000" />
-      <workItem from="1447001658160" duration="6890000" />
+      <workItem from="1447001658160" duration="6943000" />
     </task>
     <task id="LOCAL-00001" summary="remove commented lines.">
       <created>1445208877296</created>
@@ -458,11 +455,17 @@
       <option name="project" value="LOCAL" />
       <updated>1447012163313</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="indea files">
+      <created>1447012268714</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1447012268714</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11067000" />
+    <option name="totallyTimeSpent" value="11120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="975" extended-state="6" />
@@ -538,7 +541,8 @@
     <MESSAGE value="move sound functions to sound.js" />
     <MESSAGE value="set backround scripts persistent from false to true" />
     <MESSAGE value="refactor structure." />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor structure." />
+    <MESSAGE value="indea files" />
+    <option name="LAST_COMMIT_MESSAGE" value="indea files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
