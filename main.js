@@ -1,53 +1,68 @@
 $(document).ready(function() {
     $(document).keypress(function () {
-        if( event.which === 116 ) {
-            resetViewElements();
-            var selectedText = getSelectedText();
-            console.log(selectedText);
-            var selectionCoordinates = getSelectionCoords2();
-            console.log(selectionCoordinates.right, selectionCoordinates.top);
-            $.ajax({
-                type: "GET",
-                url: "https://dict.leo.org/dictQuery/m-vocab/ende/query.xml?tolerMode=nof&lp=ende&lang=en&rmWords=off&rmSearch=on&search=" + selectedText + "&searchLoc=0&resultOrder=basic&multiwordShowSingle=on&sectLenMax=16&n=2&t=2015-09-03T20:32:32.875Z",
-                success: function (response) {
-                    var translatedAsHtml = $(response).find('side:eq(1) > repr').html();
-                    console.log(translatedAsHtml);
-                    var $translationDiv = $('<div id="translation" />').css({
-                        'top': selectionCoordinates.top,
-                        'left': selectionCoordinates.right,
-                    });
-                    var imgUrl = chrome.extension.getURL("play.jpeg");
-                    //var $spellingDiv = $('<button type="button" id="spelling" ><img src="'+ imgUrl +'"></button>');
-                    var $spellingDiv = $('<div id="spelling"><img src="' + imgUrl + '" /></div>');
-                    $('body').append($spellingDiv);
-                    var url = $(response).find('entry:first > side:first > ibox > pron').attr('url');
-                    $(document).on('click', '#spelling', function(event) {
-                        requestAndPlay("https://dict.leo.org/media/audio/" + url + ".mp3");
-                        event.stopPropagation();
-                    });
-                    $spellingDiv.css({'top': selectionCoordinates.top,
-                        'left': selectionCoordinates.left - $spellingDiv.outerWidth(),
-                        'visibility': 'visible',
-                    });
-
-                    $.each($(response).find('side:lt(6)').filter(':odd'), function(index, value) {
-                        var translatedText = $(this).find('word').text();
-                        var translationSpan = $('<span class="tt" />').html(translatedText);
-                        $($translationDiv).append(translationSpan);
-                    });
-                    $('body').append($translationDiv);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status);
-                    alert(thrownError);
-                }
+        if (event.altKey && event.which === 116) {
+            requestTranslationFor(getSelectedText(), function (translation) {
+                displayTranslation(translation);
             });
         }
     });
     $(document).click(function() {
-        resetViewElements();
-    })
+        removeDisplayedTranslation();
+    });
 });
+
+function requestTranslationFor(text, callback) {
+    $.ajax({
+        type: "GET",
+        url: "https://dict.leo.org/dictQuery/m-vocab/ende/query.xml?tolerMode=nof&lp=ende&lang=en&rmWords=off&rmSearch=on&search=" + text + "&searchLoc=0&resultOrder=basic&multiwordShowSingle=on&sectLenMax=16&n=2&t=2015-09-03T20:32:32.875Z",
+        success: function (response) {
+            var translation = createTranslation(response);
+            callback(translation)
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+};
+
+function displayTranslation(translation) {
+    removeDisplayedTranslation();
+    var $translationDiv = createTranslationContainer(translation);
+    var $spellingDiv = createSpellingContainer(translation);
+    $('body').append($spellingDiv);
+    $('body').append($translationDiv);
+};
+
+function createTranslationContainer(response) {
+    var textSelectionCoordinates = getSelectionCoords2(window);
+    var $translationDiv = $('<div id="translation" />').css({
+        'top': textSelectionCoordinates.top,
+        'left': textSelectionCoordinates.right,
+    });
+    $.each($(response).find('side:lt(6)').filter(':odd'), function(index, value) {
+        var translatedText = $(this).find('word').text();
+        var translationSpan = $('<span class="tt" />').html(translatedText);
+        $($translationDiv).append(translationSpan);
+    });
+    return $translationDiv;
+}
+
+function createSpellingContainer(response) {
+    var imgUrl = chrome.extension.getURL("play.jpeg");
+    var url = $(response).find('entry:first > side:first > ibox > pron').attr('url');
+    var $spellingDiv = $('<div id="spelling"><img src="' + imgUrl + '" /></div>');
+    $spellingDiv.css({'top': selectionCoordinates.top,
+        'left': selectionCoordinates.left - $spellingDiv.outerWidth(),
+        'visibility': 'visible',
+    });
+    $spellingDiv.click(function (event) {
+        requestAndPlay("https://dict.leo.org/media/audio/" + url + ".mp3");
+        event.stopPropagation();
+    });
+    return $spellingDiv;
+}
 
 function getSelectedText() {
     var text = "";
@@ -92,7 +107,7 @@ function getSelectionCoords2(win) {
     return { top: top, left: left, right: right };
 }
 
-function resetViewElements() {
+function removeDisplayedTranslation() {
     $('#translation').remove();
     $('#spelling').remove();
     var $wrapper = $('.tr');
