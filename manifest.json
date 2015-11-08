@@ -15,7 +15,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["styles.css"],
-      "js": ["jquery-2.1.4.js", "myscript.js"]
+      "js": ["jquery-2.1.4.js", "main.js"]
     }
   ],
   "permissions": [
