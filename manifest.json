@@ -8,8 +8,8 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["sound.js"],
-    "persistent": true
+      "scripts": ["sound.js"],
+      "persistent": false
   },
   "content_scripts": [
     {

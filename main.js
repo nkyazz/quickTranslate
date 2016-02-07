@@ -1,7 +1,9 @@
 $(document).ready(function() {
     $(document).keypress(function () {
         if (event.altKey && event.which === 8224) {
-            requestTranslationFor(getSelectedText(), function (translation) {
+            removeDisplayedTranslation();
+            var selectedText = getSelectedText();
+            requestTranslationFor(selectedText, function (translation) {
                 displayTranslation(translation);
             });
         }
@@ -16,8 +18,7 @@ function requestTranslationFor(text, callback) {
         type: "GET",
         url: "https://dict.leo.org/dictQuery/m-vocab/ende/query.xml?tolerMode=nof&lp=ende&lang=en&rmWords=off&rmSearch=on&search=" + text + "&searchLoc=0&resultOrder=basic&multiwordShowSingle=on&sectLenMax=16&n=2&t=2015-09-03T20:32:32.875Z",
         success: function (response) {
-            var translation = createTranslation(response);
-            callback(translation)
+            callback(response)
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -25,23 +26,30 @@ function requestTranslationFor(text, callback) {
             alert(thrownError);
         }
     });
-};
+}
 
 function displayTranslation(translation) {
-    removeDisplayedTranslation();
-    var $translationDiv = createTranslationContainer(translation);
-    var $spellingDiv = createSpellingContainer(translation);
-    $('body').append($spellingDiv);
-    $('body').append($translationDiv);
-};
-
-function createTranslationContainer(response) {
-    var textSelectionCoordinates = getSelectionCoords2(window);
-    var $translationDiv = $('<div id="translation" />').css({
-        'top': textSelectionCoordinates.top,
-        'left': textSelectionCoordinates.right,
+    var $translationDiv = createTranslationDiv(translation);
+    var $spellingDiv = createSpellingDiv(translation);
+    var $body = $('body');
+    $body.append($translationDiv);
+    $body.append($spellingDiv);
+    var selection = getSelection();
+    $translationDiv.css({
+        'top': selection.top,
+        'left': selection.right,
+        'visibility': 'visible'
     });
-    $.each($(response).find('side:lt(6)').filter(':odd'), function(index, value) {
+    $spellingDiv.css({
+        'top': selection.top,
+        'left': selection.left - $spellingDiv.outerWidth(),
+        'visibility': 'visible'
+    });
+}
+
+function createTranslationDiv(response) {
+    var $translationDiv = $('<div id="translation" />');
+    $.each($(response).find('side:lt(6)').filter(':odd'), function() {
         var translatedText = $(this).find('word').text();
         var translationSpan = $('<span class="tt" />').html(translatedText);
         $($translationDiv).append(translationSpan);
@@ -49,14 +57,10 @@ function createTranslationContainer(response) {
     return $translationDiv;
 }
 
-function createSpellingContainer(response) {
+function createSpellingDiv(response) {
     var imgUrl = chrome.extension.getURL("play.jpeg");
     var url = $(response).find('entry:first > side:first > ibox > pron').attr('url');
     var $spellingDiv = $('<div id="spelling"><img src="' + imgUrl + '" /></div>');
-    $spellingDiv.css({'top': selectionCoordinates.top,
-        'left': selectionCoordinates.left - $spellingDiv.outerWidth(),
-        'visibility': 'visible',
-    });
     $spellingDiv.click(function (event) {
         requestAndPlay("https://dict.leo.org/media/audio/" + url + ".mp3");
         event.stopPropagation();
@@ -74,10 +78,9 @@ function getSelectedText() {
     return text;
 }
 
-function getSelectionCoords2(win) {
-    win = win || window;
-    var doc = win.document;
-    var sel = doc.selection, range, rects, rect;
+function getSelection() {
+    var doc = window.document;
+    var sel = doc.selection, range;
     var top = 0, left = 0, right = 0;
     if (sel) {
         if (sel.type != "Control") {
@@ -86,8 +89,8 @@ function getSelectionCoords2(win) {
             x = range.boundingLeft;
             y = range.boundingTop;
         }
-    } else if (win.getSelection) {
-        sel = win.getSelection();
+    } else if (window.getSelection) {
+        sel = window.getSelection();
         if (sel.rangeCount) {
             range = sel.getRangeAt(0).cloneRange();
             if (range.getClientRects) {
@@ -122,13 +125,13 @@ function selectText(element) {
     var doc = document;
     var text = doc.getElementById(element);
 
-    if (doc.body.createTextRange) { // ms
-        var range = doc.body.createTextRange();
+    var range = doc.body.createTextRange;
+    if (range) { // ms
         range.moveToElementText(text);
         range.select();
     } else if (window.getSelection) { // moz, opera, webkit
         var selection = window.getSelection();
-        var range = doc.createRange();
+        range = doc.createRange();
         range.selectNodeContents(element);
         selection.removeAllRanges();
         selection.addRange(range);
