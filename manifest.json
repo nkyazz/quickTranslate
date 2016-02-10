@@ -4,18 +4,17 @@
   "description": "This extension shows a Google Image search result for the current page",
   "version": "1.0",
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "resources/images/icon.png",
+    "default_popup": "src/html/popup.html"
   },
   "background": {
-      "scripts": ["sound.js"],
       "persistent": false
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["styles.css"],
-      "js": ["jquery-2.1.4.js", "main.js"]
+      "css": ["src/css/styles.css"],
+      "js": ["lib/jquery-2.1.4.js", "src/js/main.js"]
     }
   ],
   "permissions": [
@@ -23,6 +22,6 @@
     "https://ajax.googleapis.com/"
   ],
   "web_accessible_resources": [
-    "play.jpeg"
+    "resources/images/play.jpeg"
   ]
 }
