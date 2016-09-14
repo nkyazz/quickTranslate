@@ -23,7 +23,6 @@ $(document).ready(function() {
         request.send();
     }
 
-// Create Buffered Sound Source
     function playAudio(buffer) {
         source = audioContext.createBufferSource(); // Create sound source
         source.buffer = buffer; // Add buffered data to object
@@ -60,7 +59,7 @@ $(document).ready(function() {
         });
         $spellingDiv.css({
             'top': selection.top,
-            'left': selection.left - $spellingDiv.outerWidth(),
+            'left': selection.left - $spellingDiv.outerWidth() -1,
             'visibility': 'visible'
         });
     }
@@ -76,7 +75,7 @@ $(document).ready(function() {
     }
 
     function createSpellingDiv(response) {
-        var imgUrl = chrome.extension.getURL("play.jpeg");
+        var imgUrl = chrome.extension.getURL("resources/images/play.jpeg");
         var url = $(response).find('entry:first > side:first > ibox > pron').attr('url');
         var $spellingDiv = $('<div id="spelling"><img src="' + imgUrl + '" /></div>');
         $spellingDiv.click(function (event) {
