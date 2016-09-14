@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/inPlaceTranslator.iml" filepath="$PROJECT_DIR$/inPlaceTranslator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quickTranslate.iml" filepath="$PROJECT_DIR$/quickTranslate.iml" />
     </modules>
   </component>
 </project>
