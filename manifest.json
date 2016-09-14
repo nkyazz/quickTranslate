@@ -7,14 +7,12 @@
     "default_icon": "resources/images/icon.png",
     "default_popup": "src/html/popup.html"
   },
-  "background": {
-      "persistent": false
-  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "css": ["src/css/styles.css"],
-      "js": ["lib/jquery-2.1.4.js", "src/js/main.js"]
+      "js": ["lib/jquery-2.1.4.js",
+             "src/js/main.js"]
     }
   ],
   "permissions": [
